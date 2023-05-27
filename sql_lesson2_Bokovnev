@@ -1,0 +1,66 @@
+CREATE TABLE sales
+(
+Id INT NOT NULL,
+order_date DATA NOT NULL,
+count_product INT NOT NULL,
+o_type INT NOT NULL,
+PRIMARY KEY (Id)
+);
+
+CREATE TABLE order_type
+(
+order_id INT NOT NULL,
+order_type VARCHAR(50) NOT NULL,
+PRIMARY KEY (order_id)
+);
+
+INSERT INTO order_type
+VALUES (1, 'Средний заказ'),
+(2, 'Маленький заказ'),
+(3, 'Большой заказ');
+
+INSERT INTO sales
+VALUES (1, 2022-01-01, 156, 0),
+(2, 2022-01-02, 180, 0),
+(3, 2022-01-03, 21, 0),
+(4, 2022-01-04, 124, 0),
+(5, 2022-01-05, 341, 0);
+
+UPDATE sales
+SET o_type = 'Средний заказ' WHERE id = 1;
+UPDATE sales
+SET o_type = 'Средний заказ' WHERE id = 2;
+UPDATE sales
+SET o_type = 'Маленький заказ' WHERE id = 3;
+UPDATE sales
+SET o_type = 'Средний заказ' WHERE id = 4;
+UPDATE sales
+SET o_type = 'Большой заказ' WHERE id = 5;
+
+CREATE TABLE orders
+(
+id INT NOT NULL,
+employee_id VARCHAR(50) NOT NULL,
+amount FLOAT NOT NULL,
+order_status VARCHAR(20),
+PRIMARY KEY (id)
+);
+
+INSERT INTO orders
+VALUES (1, 'e03', 15.00, 'OPEN'),
+(2, 'e01', 25.50, 'OPEN'),
+(3, 'e05', 100.70, 'CLOSED'),
+(4, 'e02', 22.18, 'OPEN'),
+(5, 'e04', 9.50, 'CANCELLED');
+
+SELECT id, order_status,
+CASE
+WHEN id = 1 OR id = 2 OR id = 4 THEN 'Order is in open state'
+WHEN id = 3 THEN 'Order is closed'
+WHEN id = 5 THEN 'Order is cancelled'
+ELSE ''
+END AS full_order_status
+FROM orders;
+
+NULL - это "пусто"
+0 - это соответственно значение "ноль"
