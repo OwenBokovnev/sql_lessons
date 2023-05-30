@@ -1,0 +1,57 @@
+CREATE TABLE staff
+(
+id INT NOT NULL,
+firstname VARCHAR(20) NOT NULL,
+lastname VARCHAR(50) NOT NULL,
+post VARCHAR(50),
+seniority INT NOT NULL,
+salary INT NOT NULL,
+age INT NOT NULL,
+PRIMARY KEY (id)
+);
+
+INSERT INTO staff
+VALUES (1, 'Вася', 'Петров', 'Начальник', 40, 100000, 60),
+	   (2, 'Пётр', 'Власов', 'Начальник', 8, 70000, 30),
+	   (3, 'Катя', 'Катина', 'Инженер', 2, 70000, 25),
+	   (4, 'Саша', 'Сасин', 'Инженер', 12, 50000, 35),
+	   (5, 'Иван', 'Иванов', 'Рабочий', 40, 30000, 59),
+	   (6, 'Пётр', 'Петров', 'Рабочий', 20, 25000, 40),
+	   (7, 'Сидр', 'Сидоров', 'Рабочий', 10, 20000, 35),
+	   (8, 'Антон', 'Антонов', 'Рабочий', 8, 19000, 28),
+	   (9, 'Юрий', 'Юрков', 'Рабочий', 5, 15000, 25),
+	   (10, 'Максим', 'Максимов', 'Рабочий', 2, 11000, 22),
+	   (11, 'Юрий', 'Галкин', 'Рабочий', 3, 12000, 24),
+	   (12, 'Людмила', 'Маркина', 'Уборщик', 10, 10000, 49);
+	   
+SELECT *
+FROM staff
+ORDER BY salary;
+
+SELECT *
+FROM staff
+ORDER BY salary DESC;
+
+SELECT DISTINCT salary
+FROM staff
+ORDER BY salary DESC 
+LIMIT 5;
+-- если имеется в виду как уровень ЗП то используем DISTINCT, ну или можно брать его
+
+SELECT post, SUM(salary) AS sum
+FROM staff
+GROUP BY post
+ORDER BY sum DESC;
+
+SELECT COUNT(post)
+FROM staff
+WHERE post = 'Рабочий' AND (age BETWEEN 24 AND 49);
+
+SELECT COUNT(DISTINCT (post))
+FROM staff;
+
+SELECT post, AVG(age) AS average_age
+FROM staff
+GROUP BY post
+HAVING average_age < 30; 
+-- меньше 30 среднего возраста нет
