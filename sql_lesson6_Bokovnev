@@ -1,0 +1,34 @@
+DROP PROCEDURE IF EXISTS get_user
+DELIMITER //
+CREATE PROCEDURE get_user()
+BEGIN
+  INSERT INTO users_old 
+  VALUES (1, 'Reuben', 'Nienow', 'arlo50@example.org');
+  DELETE FROM users
+  WHERE id = 1;
+END//
+DELIMITER ;
+CALL get_user();
+commit; -- или rollback
+____________________________________________________________________________________
+CREATE TABLE logs_new
+(
+	id INT,
+    text_log VARCHAR (1000),
+    date_log DATE DEFAULT CURRENT_TIMESTAMP
+);
+
+DROP PROCEDURE IF EXISTS get_log
+DELIMITER //
+CREATE PROCEDURE get_log()
+BEGIN
+	SET @max_id := 1;
+	IF ((SELECT id FROM logs_new) > @max_id, 
+    (
+	INSERT INTO logs_new
+	VALUES (@max_id, firstname, lastname, email
+	)));
+END//
+DELIMITER ;
+CALL get_log();
+commit;
