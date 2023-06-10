@@ -12,7 +12,7 @@ GROUP BY t1.id;
 
 SELECT 
 DENSE_RANK () OVER(ORDER BY out_messages DESC) AS rnk,
-firstname ||' '|| lastname AS user_name,
+CONCAT (firstname, ' ',lastname) AS user_name,
 summary_messages
 FROM v_users40 vu;
 
