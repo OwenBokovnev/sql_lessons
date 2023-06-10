@@ -1,0 +1,22 @@
+CREATE VIEW v_users40 AS
+SELECT t1.id, t1.firstname, t1.lastname, t2.gender, t2.hometown, 
+	   (DATETIME() - t2.birthday) AS age, 
+	   SUM(t3.from_user_id) AS out_messages,
+	   SUM(t3.to_user_id) AS in_messages,
+	   (t3.from_user_id + t3.to_user_id) AS summary_messages
+FROM users t1
+LEFT JOIN profiles t2 ON t1.id = t2.user_id
+LEFT JOIN messages t3 ON t1.id = t3.id
+WHERE age < 40
+GROUP BY t1.id;
+
+SELECT 
+DENSE_RANK () OVER(ORDER BY out_messages DESC) AS rnk,
+firstname ||' '|| lastname AS user_name,
+summary_messages
+FROM v_users40 vu;
+
+SELECT
+id,
+LEAD (created_at) OVER (ORDER BY created_at) A
+FROM messages;
