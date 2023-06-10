@@ -11,6 +11,20 @@ DELIMITER ;
 CALL get_user();
 commit; -- или rollback
 ____________________________________________________________________________________
+
+ALTER TABLE users ADD COLUMN hello datetime;
+
+SELECT id, 
+	   firstname, 
+       lastname, 
+       email, 
+       IF(current_time() BETWEEN '06:01' AND '12:00', 'Доброе утро', 
+       IF(current_time() BETWEEN '12:01' AND '18:00', 'Добрый день', 
+       IF(current_time() BETWEEN '18:01' AND '00:00', 'Добрый вечер', 
+       IF(current_time() BETWEEN '00:01' AND '06:00', 'Доброй ночи'))) hello
+FROM
+	   users;
+____________________________________________________________________________________
 CREATE TABLE logs_new
 (
 	id INT,
